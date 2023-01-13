@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { Moment } from '../Moment';
+import { Response } from '../Response';
 
 
 
@@ -22,5 +23,33 @@ export class MomentService {
   createMoment(formData:FormData): Observable<FormData>{
 
     return this.http.post<FormData>(this.apiUrl, formData);
+  }
+
+  getMoments():Observable<Response<Moment[]>>{
+
+    return this.http.get<Response<Moment[]>>(this.apiUrl);
+
+  }
+
+  getMoment(id:number):Observable<Response<Moment>>{
+
+    const url = `${this.apiUrl}/${id}`;
+    console.log(url);
+    return this.http.get<Response<Moment>>(url);
+
+  }
+
+  removeMoment(id:number){
+
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+
+  }
+
+  updateService(id:number, formData:FormData): Observable<FormData>{
+
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<FormData>(url, formData);
+
   }
 }
